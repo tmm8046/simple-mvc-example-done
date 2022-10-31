@@ -154,6 +154,7 @@ const findDog = async (req, res) => {
     return res.status(500).json({ error: 'Something went wrong' });
   });
 
+  return res.json({ name: doc.name, breed: doc.age });
 };
 
 // Get name will return the name of the last added cat.
