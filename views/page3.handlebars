@@ -17,8 +17,8 @@
   <a href="/page4">Page 4</a>
 
   <form action= "/addDog" method="POST">
-    <label for="dogname">Name:</label>
-    <input type="text" name="dogname" value="">
+    <label for="name">Name:</label>
+    <input type="text" name="name" value="">
     <label for="breed">Breed:</label>
     <input type="text" name="breed" value="">
     <label for="age">Age:</label>
@@ -26,8 +26,8 @@
     <button>Add</button>
   </form>
 
-  <form action="findDog" method="GET">
-    <input type="text" id="dogSearch">
+  <form action="/findDog" method="POST">
+    <input type="text" name="dogSearch">
     <button>Increase age</button>
   </form>
 </body>

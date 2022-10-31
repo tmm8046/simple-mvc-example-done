@@ -11,15 +11,8 @@ const defaultData = {
   bedsOwned: 0,
 };
 
-const defaultDogData = {
-  dogname: 'unknown',
-  breed: 'unknown',
-  age: 0,
-};
-
 // object for us to keep track of the last Cat we made and dynamically update it sometimes
 let lastAdded = new Cat(defaultData);
-let lastDogAdded = new Dog(defaultDogData);
 
 // Function to handle rendering the index page.
 const hostIndex = (req, res) => {
@@ -91,18 +84,25 @@ const hostPage3 = (req, res) => {
   res.render('page3');
 };
 
-const hostPage4 = (req, res) => {
-  res.render('page4');
+const hostPage4 = async (req, res) => {
+  try {
+    const docs = await Dog.find({}).lean().exec();
+
+    return res.render('page4', { dogs: docs });
+  } catch (err) {
+
+    console.log(err);
+    return res.status(500).json({ error: 'failed to find dogs' });
+  }
 };
 
 const addDog = async (req, res) => {
-  if (!req.body.dogname || !req.body.breed || !req.body.age) {
-    // If they are missing data, send back an error.
+  if (!req.body.name || !req.body.breed || !req.body.age) {
     return res.status(400).json({ error: 'name, breed and age are all required' });
   }
 
   const dogData = {
-    dogname: `${req.body.dogname}`,
+    name: `${req.body.name}`,
     breed: `${req.body.breed}`,
     age: `${req.body.age}`,
   };
@@ -116,22 +116,21 @@ const addDog = async (req, res) => {
     return res.status(500).json({ error: 'failed to create Dog' });
   }
 
-  lastDogAdded = newDog;
   return res.json({
-    dogname: lastDogAdded.dogname,
-    breed: lastDogAdded.breed,
-    age: lastDogAdded.age,
+    name: newDog.name,
+    breed: newDog.breed,
+    age: newDog.age,
   });
 };
 
 const findDog = async (req, res) => {
-  if (!req.query.dogname) {
+  if (!req.body.dogSearch) {
     return res.status(400).json({ error: 'Name is required to perform a search' });
   }
 
   let doc;
   try {
-    doc = await Dog.findOne({ dogname: req.query.dogname }).exec();
+    doc = await Dog.findOne({ name: req.body.dogSearch }).exec();
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: 'Something went wrong' });
@@ -141,12 +140,12 @@ const findDog = async (req, res) => {
     return res.json({ error: 'No dogs found' });
   }
 
-  doc.age++;
-
   const savePromise = doc.save();
 
+  doc.age++;
+
   savePromise.then(() => res.json({
-    dogname: doc.dogname,
+    name: doc.name,
     breed: doc.breed,
     age: doc.age,
   }));
@@ -156,7 +155,7 @@ const findDog = async (req, res) => {
     return res.status(500).json({ error: 'Something went wrong' });
   });
 
-  return res.json({ dogname: doc.dogname, breed: doc.breed, age: doc.age });
+
 };
 
 // Get name will return the name of the last added cat.
