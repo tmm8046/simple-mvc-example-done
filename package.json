@@ -12,7 +12,7 @@
   "author": "Cody Van De Mark / Austin Willoughby",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.20"
@@ -24,5 +24,13 @@
     "express-handlebars": "^6.0.6",
     "mongoose": "^6.6.5",
     "serve-favicon": "^2.5.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmm8046/simple-mvc-example-done.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tmm8046/simple-mvc-example-done/issues"
+  },
+  "homepage": "https://github.com/tmm8046/simple-mvc-example-done#readme"
 }
