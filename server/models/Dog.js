@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 let DogModel = {};
 
 const DogSchema = new mongoose.Schema({
-  name: {
+  dogname: {
     type: String,
     required: true,
     trim: true,
@@ -15,7 +15,7 @@ const DogSchema = new mongoose.Schema({
     required: true,
   },
 
-  Age: {
+  age: {
     type: Number,
     min: 0,
     required: true,

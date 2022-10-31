@@ -16,12 +16,13 @@
   <a href="/page2">Page 2</a>
   <a href="/page3">Page 3</a>
 
-  <form id="dogs" method="/displayDogs">
+  {{#if dogs}}
     <ul>
-
+        {{#each dogs}}
+            <li>{{this.dogname}} is a {{this.dogbreed}} and is {{this.dogage}} yrs old</li>
+        {{/each}}
     </ul>
-  </form>
-
+  {{/if}}
 
 </body>
 </html>
